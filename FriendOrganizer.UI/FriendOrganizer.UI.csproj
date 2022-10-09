@@ -12,4 +12,8 @@
     <ProjectReference Include="..\FriendOrganizer.Model\FriendOrganizer.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.4.0" />
+  </ItemGroup>
+
 </Project>
