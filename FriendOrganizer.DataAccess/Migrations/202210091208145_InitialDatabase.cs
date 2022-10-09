@@ -12,9 +12,9 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
+                        FirstName = c.String(nullable: false, maxLength: 50),
                         LastName = c.String(),
-                        Email = c.String(),
+                        Email = c.String(maxLength: 100),
                     })
                 .PrimaryKey(t => t.Id);
             

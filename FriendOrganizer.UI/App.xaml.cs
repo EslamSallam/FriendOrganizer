@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using FriendOrganizer.UI.Startup;
 using System.Windows;
+using System.Configuration;
 
 namespace FriendOrganizer.UI
 {
