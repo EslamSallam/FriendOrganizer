@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" Width="200">
     <Grid >
-        <ListView ItemsSource="{Binding Friends}" DisplayMemberPath="DisplayMember" />
+        <ListView ItemsSource="{Binding Friends}" SelectionChanged="ListView_SelectionChanged" DisplayMemberPath="DisplayMember" />
     </Grid>
 </UserControl>

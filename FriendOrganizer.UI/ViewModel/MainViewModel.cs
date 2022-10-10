@@ -11,11 +11,33 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        public INavigationViewModel NavigationViewModel;
+        private INavigationViewModel _navigationViewModel;
+        private IFriendDetailViewModel _friendDetailViewModel;
+        private readonly IFriendDetailViewModel friendDetailViewModel;
 
-        public MainViewModel(INavigationViewModel navigationViewModel)
+        public INavigationViewModel NavigationViewModel
         {
-            NavigationViewModel = navigationViewModel;
+            get
+            {
+                return _navigationViewModel;
+            }
+        }
+
+        public IFriendDetailViewModel FriendDetailViewModel
+        {
+            get
+            {
+                return _friendDetailViewModel;
+            }
+        }
+
+        public MainViewModel()
+        {
+        }
+        public MainViewModel(INavigationViewModel navigationViewModel, IFriendDetailViewModel friendDetailViewModel)
+        {
+            _navigationViewModel = navigationViewModel;
+            _friendDetailViewModel = friendDetailViewModel;
         }
 
         public async Task LoadAsync()

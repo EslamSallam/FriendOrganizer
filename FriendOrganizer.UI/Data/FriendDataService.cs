@@ -16,11 +16,11 @@ namespace FriendOrganizer.UI.Data
         }
 
 
-        public async Task<List<Friend>>? GetAllAsync()
+        public async Task<Friend>? GetByIdAsync(int FriendId)
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Friends.AsNoTracking().ToListAsync();
+                return await ctx.Friends.AsNoTracking().SingleAsync(f => f.Id == FriendId);
             }
         }
     }

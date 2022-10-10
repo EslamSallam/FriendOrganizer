@@ -21,19 +21,18 @@ namespace FriendOrganizer.UI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public readonly MainViewModel ViewModel;
+        public readonly MainViewModel MViewModel;
 
         public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
-            this.ViewModel = viewModel;
-            DataContext = ViewModel;
+            this.MViewModel = viewModel;
+            this.DataContext = MViewModel;
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-           await ViewModel.LoadAsync();
-           NavTest.DataContext = ViewModel.NavigationViewModel;    
+           await MViewModel.LoadAsync();  
         }
     }
 }

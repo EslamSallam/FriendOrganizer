@@ -14,6 +14,11 @@ namespace FriendOrganizer.UI.ViewModel
         private IFriendLookupDataService _friendLookupService { get; }
         public ObservableCollection<LookupItem> Friends { get; }
 
+        public NavigationViewModel()
+        {
+
+        }
+
         public NavigationViewModel(IFriendLookupDataService friendLookupService)
         {
             _friendLookupService = friendLookupService;

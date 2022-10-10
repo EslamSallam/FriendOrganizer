@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:FriendOrganizer.UI.View"
+        xmlns:Viewmodel="clr-namespace:FriendOrganizer.UI.ViewModel"
         xmlns:local="clr-namespace:FriendOrganizer.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" FontSize="20">
@@ -12,27 +13,8 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <view:NavigationView  x:Name="NavTest" Grid.Column="0" DataContext="{Binding Path=ViewModelB.NavigationViewModel,Mode=TwoWay}" />
+        <view:NavigationView   Grid.Column="0" DataContext="{Binding NavigationViewModel}" />
+        <view:FriendDetailView Grid.Column="1" DataContext="{Binding FriendDetailViewModel}"/>
         
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Margin="10 10 10 0" Content="FirstName"/>
-            <TextBox Grid.Row="1" Margin="10 0 10 10" Text="{Binding SelectedFriend.FirstName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
-            <Label Grid.Row="2" Margin="10 0" Content="LastName"/>
-            <TextBox Grid.Row="3" Margin="10 0 10 10" Text="{Binding SelectedFriend.LastName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
-            <Label Grid.Row="4" Margin="10 0" Content="Email"/>
-            <TextBox Grid.Row="5" Margin="10 0 10 10" Text="{Binding SelectedFriend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-        </Grid>
     </Grid>
 </Window>
