@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:FriendOrganizer.UI.View"
         xmlns:local="clr-namespace:FriendOrganizer.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" FontSize="20">
@@ -11,9 +12,8 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
-        <ListView Grid.Column="0" ItemsSource="{Binding Friends}" SelectedItem="{Binding SelectedFriend,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberPath="FirstName"/>
-
+        <view:NavigationView  x:Name="NavTest" Grid.Column="0" DataContext="{Binding Path=ViewModelB.NavigationViewModel,Mode=TwoWay}" />
+        
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

@@ -3,25 +3,27 @@ using FriendOrganizer.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data
 {
-    public class FriendDataService : IFriendDataService
+    public class LookupDataService : IFriendLookupDataService
     {
         private Func<FriendOrganizerDBContext> _contextCreator { get; }
-        public FriendDataService(Func<FriendOrganizerDBContext> contextCreator)
+        public LookupDataService(Func<FriendOrganizerDBContext> contextCreator)
         {
             _contextCreator = contextCreator;
         }
 
-
-        public async Task<List<Friend>>? GetAllAsync()
+        public async Task<IEnumerable<LookupItem>> GetFriendLookupAsync()
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Friends.AsNoTracking().ToListAsync();
+                return await ctx.Friends.AsNoTracking().Select(f => new LookupItem { Id = f.Id, DisplayMember = f.FirstName + " " + f.LastName }).ToListAsync();
             }
         }
+
     }
 }
