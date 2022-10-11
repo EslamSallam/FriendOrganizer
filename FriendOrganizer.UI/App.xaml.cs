@@ -2,6 +2,7 @@
 using FriendOrganizer.UI.Startup;
 using System.Windows;
 using System.Configuration;
+using System;
 
 namespace FriendOrganizer.UI
 {
@@ -16,6 +17,12 @@ namespace FriendOrganizer.UI
             var container = bootstrapper.Bootstrap();
             var MainWindow = container.Resolve<MainWindow>();
             MainWindow.Show();
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show("Unexpected error occured." + Environment.NewLine + e.Exception.Message);
+            e.Handled = true;
         }
     }
 }

@@ -6,7 +6,8 @@ namespace FriendOrganizer.Model
     {
         [Key]
         public int Id { get; set; }
-        public string? FirstName { get; set; }
+        [Required]
+        public string FirstName { get; set; }
         public string? LastName { get; set; }
         [MaxLength(100)]
         public string? Email { get; set; }

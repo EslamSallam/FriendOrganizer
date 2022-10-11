@@ -17,6 +17,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition />
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Margin="10 10 10 0" Content="FirstName"/>
             <TextBox Grid.Row="1" Margin="10 0 10 10" Text="{Binding Friend.FirstName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
@@ -26,6 +27,8 @@
 
             <Label Grid.Row="4" Margin="10 0" Content="Email"/>
             <TextBox Grid.Row="5" Margin="10 0 10 10" Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Button Grid.Row="8" Margin="10 10" HorizontalAlignment="Left" Width="100" Height="30" Content="Save" Command="{Binding SaveCommand}" />
         </Grid>
     </Grid>
 </UserControl>
