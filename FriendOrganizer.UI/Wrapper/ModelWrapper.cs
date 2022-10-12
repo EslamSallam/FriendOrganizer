@@ -13,16 +13,14 @@ namespace FriendOrganizer.UI.Wrapper
 		}
 
 		public T Model { get; }
-		protected virtual void SetValue<TValue>(TValue? value, [CallerMemberName] string PropertyName = null)
+		protected virtual void SetValue<TValue>(TValue? value, [CallerMemberName] string? PropertyName = null)
 		{
 			typeof(T).GetProperty(PropertyName).SetValue(Model, value);
 			OnPropertyChanged(PropertyName);
 			validatePropertyInternal(PropertyName);
 		}
 
-
-
-		protected virtual TValue GetValue<TValue>([CallerMemberName] string PropertyName = null)
+		protected virtual TValue GetValue<TValue>([CallerMemberName] string? PropertyName = null)
 		{
 			return (TValue)typeof(T).GetProperty(PropertyName).GetValue(Model);
 		}

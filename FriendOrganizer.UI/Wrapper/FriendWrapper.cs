@@ -9,7 +9,16 @@ namespace FriendOrganizer.UI.Wrapper
 		{
 		}
 
-		public int Id { get { return Model.Id; } }
+
+        public string UIFirstError
+        {
+            get
+            {
+				return FirstError;
+            }
+        }
+
+        public int Id { get { return Model.Id; } }
 
 		public string FirstName
 		{
@@ -36,8 +45,8 @@ namespace FriendOrganizer.UI.Wrapper
 					if (FirstName.Length <= 5)
 					{
 						yield return $"FirstName Should be Greater than 5 chars.";
-					}
-					break;
+                    }
+                    break;
                 case nameof(LastName):
                     if (LastName.Length <= 5)
                     {
@@ -45,8 +54,10 @@ namespace FriendOrganizer.UI.Wrapper
                     }
                     break;
                 default:
-					break;
+                        break;
+					
 			}
+            OnPropertyChanged("UIFirstError");
 		}
     }
 }
