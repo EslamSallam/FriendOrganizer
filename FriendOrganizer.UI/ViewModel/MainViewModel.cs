@@ -1,5 +1,6 @@
 ﻿using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,7 @@ namespace FriendOrganizer.UI.ViewModel
     {
         private INavigationViewModel _navigationViewModel;
         private IFriendDetailViewModel _friendDetailViewModel;
-        private readonly IFriendDetailViewModel friendDetailViewModel;
+        private readonly IEventAggregator _eventAggregator;
 
         public INavigationViewModel NavigationViewModel
         {
@@ -34,10 +35,11 @@ namespace FriendOrganizer.UI.ViewModel
         public MainViewModel()
         {
         }
-        public MainViewModel(INavigationViewModel navigationViewModel, IFriendDetailViewModel friendDetailViewModel)
+        public MainViewModel(INavigationViewModel navigationViewModel, IFriendDetailViewModel friendDetailViewModel,IEventAggregator eventAggregator)
         {
             _navigationViewModel = navigationViewModel;
             _friendDetailViewModel = friendDetailViewModel;
+            _eventAggregator = eventAggregator;
         }
 
         public async Task LoadAsync()
