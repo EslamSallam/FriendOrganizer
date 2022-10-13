@@ -29,6 +29,12 @@ namespace FriendOrganizer.UI.Wrapper
 		{
 			ClearErrors(propertyName);
 
+			//1. TODO:: Validate Data Annotations
+
+
+
+			//2. Validate Custom errors
+
 			var errors = validateProperty(propertyName);
 			if (errors != null)
 			{

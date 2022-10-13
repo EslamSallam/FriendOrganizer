@@ -1,5 +1,6 @@
 ﻿using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
+using FriendOrganizer.UI.Data.Lookups;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
