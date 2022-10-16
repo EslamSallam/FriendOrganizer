@@ -1,5 +1,8 @@
 ﻿using FriendOrganizer.Model;
+using FriendOrganizer.UI.Command;
 using FriendOrganizer.UI.Data;
+using FriendOrganizer.UI.Events;
+using FriendOrganizer.UI.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -7,14 +10,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FriendOrganizer.UI.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
         private INavigationViewModel _navigationViewModel;
+        private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
         private IFriendDetailViewModel _friendDetailViewModel;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IMessageDialogService _messageDialogService;
+        private ICommand CreateNewFriendCommand { get; }
 
         public INavigationViewModel NavigationViewModel
         {
@@ -30,16 +37,30 @@ namespace FriendOrganizer.UI.ViewModel
             {
                 return _friendDetailViewModel;
             }
+           private set
+            {
+
+                _friendDetailViewModel = value;
+                OnPropertyChanged();
+            }
         }
 
         public MainViewModel()
         {
         }
-        public MainViewModel(INavigationViewModel navigationViewModel, IFriendDetailViewModel friendDetailViewModel,IEventAggregator eventAggregator)
+        public MainViewModel(INavigationViewModel navigationViewModel, Func<IFriendDetailViewModel> friendDetailViewModelCreator,IEventAggregator eventAggregator,IMessageDialogService messageDialogService)
         {
             _navigationViewModel = navigationViewModel;
-            _friendDetailViewModel = friendDetailViewModel;
+            _friendDetailViewModelCreator = friendDetailViewModelCreator;
             _eventAggregator = eventAggregator;
+            _messageDialogService = messageDialogService;
+            _eventAggregator.GetEvent<OpenFriendDetailViewEvent>().Subscribe(onOpenFriendDetailView);
+        }
+
+        private async void onOpenFriendDetailView(int friendId)
+        {
+            FriendDetailViewModel = _friendDetailViewModelCreator();
+            await FriendDetailViewModel.LoadAsync(friendId);
         }
 
         public async Task LoadAsync()

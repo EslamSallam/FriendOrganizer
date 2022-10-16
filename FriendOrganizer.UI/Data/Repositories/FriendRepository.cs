@@ -1,6 +1,7 @@
 ﻿using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
 using System.Data.Entity;
+using System.Data.Entity.Migrations.Builders;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
@@ -22,5 +23,14 @@ namespace FriendOrganizer.UI.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public bool HasChanges()
+        {
+            return _context.ChangeTracker.HasChanges();
+        }
+
+        public void Add(Friend friend)
+        {
+            _context.Friends.Add(friend);
+        }
     }
 }

@@ -28,11 +28,54 @@ namespace FriendOrganizer.UI
             InitializeComponent();
             this.MViewModel = viewModel;
             this.DataContext = MViewModel;
+            SetF1CommandBinding();
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
            await MViewModel.LoadAsync();  
+        }
+
+        private void SetF1CommandBinding()
+        {
+            CommandBinding helpBinding = new CommandBinding(ApplicationCommands.Help);
+            helpBinding.CanExecute += CanHelpExecute;
+            helpBinding.Executed += HelpExecuted;
+            CommandBindings.Add(helpBinding);
+        }
+
+        private void CanHelpExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            // Here, you can set CanExecute to false if you want to prevent the command from executing.
+             e.CanExecute = true;
+        }
+        private void HelpExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("Look, it is not that difficult. Just type something!", "Help!");
+        }
+        private void FileExit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MouseEnterExitArea(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void MouseLeaveArea(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void MouseEnterToolsHintsArea(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void ToolsSpellingHints_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

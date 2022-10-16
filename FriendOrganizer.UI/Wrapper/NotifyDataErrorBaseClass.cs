@@ -10,7 +10,7 @@ namespace FriendOrganizer.UI.Wrapper
 
     public class NotifyDataErrorBaseClass : ViewModelBase, INotifyDataErrorInfo
     {
-        public string FirstError
+        public string UIFirstError
         {
             get
             {

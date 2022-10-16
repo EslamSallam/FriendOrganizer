@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 
 namespace FriendOrganizer.UI.Wrapper
 {
 	public class ModelWrapper<T> : NotifyDataErrorBaseClass
-	{
-		public ModelWrapper(T model)
-		{
-			Model = model;
-		}
+    {
+        public ModelWrapper(T model)
+        {
+            Model = model;
+        }
 
-		public T Model { get; }
+        public T Model { get; }
 		protected virtual void SetValue<TValue>(TValue? value, [CallerMemberName] string? PropertyName = null)
 		{
 			typeof(T).GetProperty(PropertyName).SetValue(Model, value);

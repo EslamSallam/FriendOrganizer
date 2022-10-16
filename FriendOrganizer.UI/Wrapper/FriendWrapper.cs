@@ -9,15 +9,6 @@ namespace FriendOrganizer.UI.Wrapper
 		{
 		}
 
-
-        public string UIFirstError
-        {
-            get
-            {
-				return FirstError;
-            }
-        }
-
         public int Id { get { return Model.Id; } }
 
 		public string FirstName
