@@ -10,7 +10,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using static FriendOrganizer.UI.Services.MessageDialogService;
 
 namespace FriendOrganizer.UI.ViewModel
 {
@@ -59,6 +61,14 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void onOpenFriendDetailView(int friendId)
         {
+            if(FriendDetailViewModel!=null && FriendDetailViewModel.HasChanges)
+            {
+               var res = _messageDialogService.ShowOkCancelDialog("Friend Has unsaved Changes. Do you want to navigate?", "Warning");
+                if (res == MessageDialogResult.Cancel)
+                {
+                    return;
+                }
+            }
             FriendDetailViewModel = _friendDetailViewModelCreator();
             await FriendDetailViewModel.LoadAsync(friendId);
         }
