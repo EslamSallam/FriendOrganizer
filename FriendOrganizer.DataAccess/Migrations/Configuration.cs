@@ -18,6 +18,13 @@
                 new Friend { FirstName = "Maged", LastName = "Ahmed" },
                 new Friend { FirstName = "Hazem", LastName = "Khaled" }
                 );
+            context.ProgrammingLanguages.AddOrUpdate(
+                new ProgrammingLanguage { Name = "C#" },
+                new ProgrammingLanguage { Name = "TypeScript" },
+                new ProgrammingLanguage { Name = "VB.net" },
+                new ProgrammingLanguage { Name = "Swift" },
+                new ProgrammingLanguage { Name = "Java" }
+                );
         }
     }
 }

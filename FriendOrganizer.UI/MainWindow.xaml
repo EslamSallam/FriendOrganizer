@@ -6,7 +6,7 @@
         xmlns:view="clr-namespace:FriendOrganizer.UI.View"
         xmlns:Viewmodel="clr-namespace:FriendOrganizer.UI.ViewModel"
         xmlns:local="clr-namespace:FriendOrganizer.UI"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" FontSize="20">
     <Window.Resources>
         <DataTemplate DataType="{x:Type Viewmodel:FriendDetailViewModel}" >

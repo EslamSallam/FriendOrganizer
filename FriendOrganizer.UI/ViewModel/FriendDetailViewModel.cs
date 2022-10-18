@@ -1,5 +1,6 @@
 ﻿using FriendOrganizer.Model;
 using FriendOrganizer.UI.Command;
+using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.Data.Repositories;
 using FriendOrganizer.UI.Events;
 using FriendOrganizer.UI.Services;
@@ -7,6 +8,7 @@ using FriendOrganizer.UI.Wrapper;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Events;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -20,25 +22,33 @@ namespace FriendOrganizer.UI.ViewModel
             set { friend = value; OnPropertyChanged(); }
         }
         public IFriendRepository FriendDataService { get; }
+
+        private IProgrammingLanguageLookupDataService _programmingLanguageLookupDataService;
+
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
+        public ObservableCollection<LookupItem> ProgrammingLanguages { get; private set; }
+
         private FriendWrapper friend;
 
         private readonly IEventAggregator _eventAggregator;
         private IMessageDialogService _messageDialogService;
 
-        public FriendDetailViewModel(IFriendRepository friendDataService, IEventAggregator eventAggregator,IMessageDialogService messageDialogService)
+        public FriendDetailViewModel(IFriendRepository friendDataService, IEventAggregator eventAggregator,IMessageDialogService messageDialogService,IProgrammingLanguageLookupDataService programmingLanguageLookupDataService)
         {
             FriendDataService = friendDataService;
+            _programmingLanguageLookupDataService = programmingLanguageLookupDataService;
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
             SaveCommand = new DelegateCommand(onSaveExecute, onSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
+
+            ProgrammingLanguages = new ObservableCollection<LookupItem>();
         }
 
         private async void OnDeleteExecute(object? obj)
         {
-            var res = _messageDialogService.ShowOkCancelDialog($"Do you really want to delete {Friend.FirstName} {Friend.LastName}","Warning");
+            var res = _messageDialogService.ShowOkCancelDialog($"Do you really want to delete {Friend.FirstName} {Friend.LastName}","Question");
             if (res == MessageDialogService.MessageDialogResult.Cancel)
             {
                 return;
@@ -105,6 +115,15 @@ namespace FriendOrganizer.UI.ViewModel
                 Friend.FirstName = "";
                 Friend.LastName = "";
             }
+
+            ProgrammingLanguages.Clear();
+            ProgrammingLanguages.Add(new NullLookupItem());
+            var lookupItems = await _programmingLanguageLookupDataService.GetprogrammingLanguageLookupAsync();
+            foreach (var pl in lookupItems)
+            {
+                ProgrammingLanguages.Add(pl);
+            }
+
         }
 
         private Friend CreateNewFriend()
