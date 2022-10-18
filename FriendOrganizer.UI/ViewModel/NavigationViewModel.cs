@@ -31,6 +31,16 @@ namespace FriendOrganizer.UI.ViewModel
             _eventAggregator = eventAggregator;
             Friends = new ObservableCollection<NavigationItemViewModel>();
             _eventAggregator.GetEvent<AfterFriendSavedEvent>().Subscribe(onFriendSaveChanges);
+            _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Subscribe(onFriendDeleted);
+        }
+
+        private void onFriendDeleted(int friendId)
+        {
+            var FriendModel = Friends.SingleOrDefault(f => f.Id == friendId);
+            if (FriendModel != null)
+            {
+                Friends.Remove(FriendModel);
+            }
         }
 
         private void onFriendSaveChanges(AfterFriendSavedEventArgs UpdatedFriend)

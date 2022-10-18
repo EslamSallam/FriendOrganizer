@@ -8,6 +8,11 @@
         xmlns:local="clr-namespace:FriendOrganizer.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" FontSize="20">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type Viewmodel:FriendDetailViewModel}" >
+            <view:FriendDetailView/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
