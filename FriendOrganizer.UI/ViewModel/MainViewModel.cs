@@ -23,7 +23,8 @@ namespace FriendOrganizer.UI.ViewModel
         private IFriendDetailViewModel _friendDetailViewModel;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
-        private ICommand CreateNewFriendCommand { get; }
+        public ICommand CreateNewFriendCommand { get; }
+        
 
         public INavigationViewModel NavigationViewModel
         {
@@ -57,9 +58,15 @@ namespace FriendOrganizer.UI.ViewModel
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
             _eventAggregator.GetEvent<OpenFriendDetailViewEvent>().Subscribe(onOpenFriendDetailView);
+            CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
         }
 
-        private async void onOpenFriendDetailView(int friendId)
+        private void OnCreateNewFriendExecute(object? obj)
+        {
+            onOpenFriendDetailView(null);
+        }
+
+        private async void onOpenFriendDetailView(int? friendId)
         {
             if(FriendDetailViewModel!=null && FriendDetailViewModel.HasChanges)
             {

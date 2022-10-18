@@ -11,23 +11,23 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <!--<Menu Grid.Row="0" Grid.ColumnSpan="2" FontSize="20">
-            <MenuItem Header="Create">
-                <MenuItem Header="New Friend" Command="{Binding CreateNewFriendCommand}"/>
+        <Menu Grid.Row="0" Grid.ColumnSpan="2" Height="30" FontSize="16">
+            <MenuItem Header="Create" Height="30">
+                <MenuItem Header="New Friend" Height="30" Command="{Binding CreateNewFriendCommand}"/>
             </MenuItem>
-        </Menu>-->
-        <Menu DockPanel.Dock ="Top" HorizontalAlignment="Left" Background="White" BorderBrush 
+        </Menu>
+        <!--<Menu DockPanel.Dock ="Top" HorizontalAlignment="Left" Background="White" BorderBrush 
 ="Black">
             <MenuItem Header ="_File" >
                 <MenuItem Header ="_Exit" MouseEnter ="MouseEnterExitArea" MouseLeave ="MouseLeaveArea" Click ="FileExit_Click"/>
             </MenuItem>
-            <!-- New menu item with commands -->
+            --><!-- New menu item with commands --><!--
             <MenuItem Header="_Edit">
                 <MenuItem Command="ApplicationCommands.Copy" />
                 <MenuItem Command="ApplicationCommands.Cut" />
@@ -39,7 +39,7 @@
                                 MouseLeave="MouseLeaveArea"
                                 Click="ToolsSpellingHints_Click" />
             </MenuItem>
-        </Menu>
+        </Menu>-->
         <view:NavigationView  Grid.Row="1" Grid.Column="0" DataContext="{Binding NavigationViewModel}" />
         <view:FriendDetailView Grid.Row="1" Grid.Column="1" DataContext="{Binding FriendDetailViewModel}"/>
         

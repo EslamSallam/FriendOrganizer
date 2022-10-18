@@ -35,8 +35,15 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void onFriendSaveChanges(AfterFriendSavedEventArgs UpdatedFriend)
         {
-            var lookupItem = Friends.Single(f => f.Id == UpdatedFriend.Id);
-            lookupItem.DisplayMember = UpdatedFriend.DisplayMember;
+            var lookupItem = Friends.SingleOrDefault(f => f.Id == UpdatedFriend.Id);
+            if (lookupItem == null)
+            {
+                Friends.Add(new NavigationItemViewModel(UpdatedFriend.Id, UpdatedFriend.DisplayMember, _eventAggregator));
+            }
+            else
+            {
+                lookupItem.DisplayMember = UpdatedFriend.DisplayMember;
+            }
         }
 
         public async Task LoadAsync()

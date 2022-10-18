@@ -14,7 +14,7 @@ namespace FriendOrganizer.UI.Data.Repositories
             _context = context;
         }
 
-        public async Task<Friend>? GetByIdAsync(int FriendId)
+        public async Task<Friend>? GetByIdAsync(int? FriendId)
         {
             return await _context.Friends.SingleAsync(f => f.Id == FriendId);
         }
@@ -31,6 +31,11 @@ namespace FriendOrganizer.UI.Data.Repositories
         public void Add(Friend friend)
         {
             _context.Friends.Add(friend);
+        }
+
+        public void Remove(Friend model)
+        {
+            _context.Friends.Remove(model);
         }
     }
 }

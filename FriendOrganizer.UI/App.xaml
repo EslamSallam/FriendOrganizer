@@ -5,6 +5,13 @@
             Startup="Application_Startup"
              DispatcherUnhandledException="Application_DispatcherUnhandledException">
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/MaterialDesign.xaml"/>
+                <ResourceDictionary Source="/Resources/Brushes.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
         <!--<Style TargetType="TextBox">
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>

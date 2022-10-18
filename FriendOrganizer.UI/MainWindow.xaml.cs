@@ -53,29 +53,6 @@ namespace FriendOrganizer.UI
         {
             MessageBox.Show("Look, it is not that difficult. Just type something!", "Help!");
         }
-        private void FileExit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void MouseEnterExitArea(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void MouseLeaveArea(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void MouseEnterToolsHintsArea(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void ToolsSpellingHints_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
     }
 }
