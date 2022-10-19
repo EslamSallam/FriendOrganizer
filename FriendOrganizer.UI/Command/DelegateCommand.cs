@@ -19,10 +19,6 @@ namespace FriendOrganizer.UI.Command
             _canExecute = canExecute;
         }
 
-
-
-
-
         public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
         public event EventHandler? CanExecuteChanged;

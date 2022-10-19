@@ -12,6 +12,12 @@
 
         protected override void Seed(FriendOrganizer.DataAccess.FriendOrganizerDBContext context)
         {
+
+            // Deletes all data, from all tables, except for __MigrationHistory
+            context.Database.ExecuteSqlCommand("sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'");
+            context.Database.ExecuteSqlCommand("sp_MSForEachTable 'IF OBJECT_ID(''?'') NOT IN (ISNULL(OBJECT_ID(''[dbo].[__MigrationHistory]''),0)) DELETE FROM ?'");
+            context.Database.ExecuteSqlCommand("EXEC sp_MSForEachTable 'ALTER TABLE ? CHECK CONSTRAINT ALL'");
+
             context.Friends.AddOrUpdate(
                 new Friend { FirstName = "Eslam", LastName = "Hussien" },
                 new Friend { FirstName = "Ahmed", LastName = "Hamed" },
@@ -25,6 +31,15 @@
                 new ProgrammingLanguage { Name = "Swift" },
                 new ProgrammingLanguage { Name = "Java" }
                 );
+
+            context.SaveChanges();
+
+            context.FriendPhoneNumber.AddOrUpdate(
+                new FriendPhoneNumber { Number = "+20 115087345", FriendId = context.Friends.First().Id }
+                );
+
+
+            
         }
     }
 }

@@ -10,6 +10,15 @@
                 <ResourceDictionary Source="/Resources/MaterialDesign.xaml"/>
                 <ResourceDictionary Source="/Resources/Brushes.xaml"/>
                 <ResourceDictionary Source="/Resources/Styles.xaml"/>
+                <ResourceDictionary>
+                    <Style x:Key="DataGridColumnStyle" TargetType="TextBlock">
+
+                    </Style>
+
+                    <Style x:Key="DataGridEditingColumnStyle" TargetType="TextBox">
+
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         <!--<Style TargetType="TextBox">
@@ -30,5 +39,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>-->
+
     </Application.Resources>
 </Application>

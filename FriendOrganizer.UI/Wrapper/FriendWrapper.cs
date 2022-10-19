@@ -1,5 +1,7 @@
 ﻿using FriendOrganizer.Model;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Documents;
 
 namespace FriendOrganizer.UI.Wrapper
 {
@@ -33,6 +35,8 @@ namespace FriendOrganizer.UI.Wrapper
             get { return GetValue<int>(); }
             set { SetValue(value); }
         }
+
+		public ICollection<FriendPhoneNumber> PhoneNumbers { set;get; }
         protected override IEnumerable<string> validateProperty(string propertyName)
 		{
 			switch (propertyName)

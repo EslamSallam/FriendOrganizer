@@ -15,6 +15,7 @@ namespace FriendOrganizer.DataAccess
     {
         public DbSet<Friend>? Friends { get; set; }
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+        public DbSet<FriendPhoneNumber> FriendPhoneNumber { get; set; }
         public FriendOrganizerDBContext() : base("Server=.;Database=FriendOrganizerDb;Trusted_Connection=True;")
         {
             
