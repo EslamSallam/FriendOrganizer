@@ -1,16 +1,9 @@
-﻿using FriendOrganizer.Model;
-using FriendOrganizer.UI.Command;
-using FriendOrganizer.UI.Data;
+﻿using FriendOrganizer.UI.Command;
 using FriendOrganizer.UI.Events;
 using FriendOrganizer.UI.Services;
 using Prism.Events;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using static FriendOrganizer.UI.Services.MessageDialogService;
 
@@ -20,11 +13,11 @@ namespace FriendOrganizer.UI.ViewModel
     {
         private INavigationViewModel _navigationViewModel;
         private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
-        private IFriendDetailViewModel _friendDetailViewModel;
+        private IDetailViewModel _detailViewModel;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
         public ICommand CreateNewFriendCommand { get; }
-        
+
 
         public INavigationViewModel NavigationViewModel
         {
@@ -34,16 +27,16 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public IFriendDetailViewModel FriendDetailViewModel
+        public IDetailViewModel DetailViewModel
         {
             get
             {
-                return _friendDetailViewModel;
+                return _detailViewModel;
             }
-           private set
+            private set
             {
 
-                _friendDetailViewModel = value;
+                _detailViewModel = value;
                 OnPropertyChanged();
             }
         }
@@ -51,7 +44,7 @@ namespace FriendOrganizer.UI.ViewModel
         public MainViewModel()
         {
         }
-        public MainViewModel(INavigationViewModel navigationViewModel, Func<IFriendDetailViewModel> friendDetailViewModelCreator,IEventAggregator eventAggregator,IMessageDialogService messageDialogService)
+        public MainViewModel(INavigationViewModel navigationViewModel, Func<IFriendDetailViewModel> friendDetailViewModelCreator, IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
         {
             _navigationViewModel = navigationViewModel;
             _friendDetailViewModelCreator = friendDetailViewModelCreator;
@@ -74,23 +67,20 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void onOpenFriendDetailView(int? friendId)
         {
-            if(FriendDetailViewModel!=null && FriendDetailViewModel.HasChanges)
+            if (DetailViewModel != null && DetailViewModel.HasChanges)
             {
-               var res = _messageDialogService.ShowOkCancelDialog("Friend Has unsaved Changes. Do you want to navigate?", "Warning");
+                var res = _messageDialogService.ShowOkCancelDialog("Friend Has unsaved Changes. Do you want to navigate?", "Warning");
                 if (res == MessageDialogResult.Cancel)
                 {
                     return;
                 }
             }
-            FriendDetailViewModel = _friendDetailViewModelCreator();
-            await FriendDetailViewModel.LoadAsync(friendId);
+            DetailViewModel = _friendDetailViewModelCreator();
+            await DetailViewModel.LoadAsync(friendId);
         }
         private void AfterFriendDeleted(int obj)
         {
-            FriendDetailViewModel = null;
+            DetailViewModel = null;
         }
-
-
-    
     }
 }
