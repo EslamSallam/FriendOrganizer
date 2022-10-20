@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FriendOrganizer.Model;
+using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FriendOrganizer.UI.View
 {
@@ -24,5 +15,42 @@ namespace FriendOrganizer.UI.View
         {
             InitializeComponent();
         }
+
+        private void ckabc_Checked_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+
+        private void cmb_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            cmb.Text = "";
+            var list = cmb.ItemsSource;
+            foreach (FriendProgrammingLanguages item in list)
+            {
+                if (cmb.Text.ToString().Length > 0 && item.IsChecked)
+                {
+                    cmb.Text += ", ";
+
+                }
+                if (item.IsChecked)
+                {
+                    cmb.Text += item.DisplayMember.ToString();
+                }
+            }
+        }
+
+      
+
+        //private void cmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    //txtLangs.Text = "";
+        //    //foreach (FriendProgrammingLanguages item in cmb.ItemsSource)
+        //    //{
+        //    //    txtLangs.Text += item.DisplayMember.ToString(); 
+
+        //    //}
+        //}
     }
 }

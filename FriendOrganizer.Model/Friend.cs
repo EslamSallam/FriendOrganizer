@@ -16,8 +16,7 @@ namespace FriendOrganizer.Model
         public string? LastName { get; set; }
         [MaxLength(100)]
         public string? Email { get; set; }
-        public int? FavoriteLanguageId { get; set; }
-        public ProgrammingLanguage FavoriteLanguage { get; set; }
+        public ICollection<FriendProgrammingLanguage> FriendProgrammingLanguages { get; set; }
         public ICollection<FriendPhoneNumber> PhoneNumbers { get; set; }
     }
 }

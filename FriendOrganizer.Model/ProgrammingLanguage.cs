@@ -13,5 +13,6 @@ namespace FriendOrganizer.Model
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
+        public ICollection<FriendProgrammingLanguage> FriendProgrammingLanguages { get; set; }
     }
 }

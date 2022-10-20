@@ -38,8 +38,9 @@
                 new FriendPhoneNumber { Number = "+20 115087345", FriendId = context.Friends.First().Id }
                 );
 
-
-            
+            context.FriendProgrammingLanguage.AddOrUpdate(
+                new FriendProgrammingLanguage { FriendId = context.Friends.First().Id, ProgrammingLanguageId = context.ProgrammingLanguages.First().Id }
+                );
         }
     }
 }

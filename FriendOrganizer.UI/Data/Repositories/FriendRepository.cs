@@ -1,7 +1,9 @@
 ﻿using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
-using System.Data.Entity.Migrations.Builders;
+using System.Data.Entity.Migrations;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
@@ -16,7 +18,7 @@ namespace FriendOrganizer.UI.Data.Repositories
 
         public async Task<Friend>? GetByIdAsync(int? FriendId)
         {
-            return await _context.Friends.Include(f => f.PhoneNumbers).SingleAsync(f => f.Id == FriendId);
+            return await _context.Friends.Include(f => f.FriendProgrammingLanguages).Include(f => f.PhoneNumbers).SingleAsync(f => f.Id == FriendId);
         }
         public async Task SaveAsync()
         {
@@ -41,6 +43,30 @@ namespace FriendOrganizer.UI.Data.Repositories
         public void RemovePhoneNumber(FriendPhoneNumber model)
         {
             _context.FriendPhoneNumber.Remove(model);
+        }
+
+        public void UpdateProgrammingCheckList(ObservableCollection<FriendProgrammingLanguages> programmingLanguages, int friendId)
+        {
+            foreach (var item in programmingLanguages)
+            {
+                var FriendPl = new FriendProgrammingLanguage { Id = item.Id};
+                FriendPl.FriendId = friendId;
+                FriendPl.Friend = _context.Friends.Single(f => f.Id == friendId);
+                FriendPl.ProgrammingLanguage = _context.ProgrammingLanguages.Single(f => f.Id == FriendPl.ProgrammingLanguageId);
+                if (item.IsChecked)
+                {
+                    _context.FriendProgrammingLanguage.AddOrUpdate(FriendPl);
+                }
+                else
+                {
+                    var res = _context.FriendProgrammingLanguage.Find(FriendPl);
+                    if (res != null)
+                    {
+                        _context.FriendProgrammingLanguage.Remove(FriendPl);
+                    }
+                }
+
+            }
         }
     }
 }

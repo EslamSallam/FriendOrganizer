@@ -1,4 +1,6 @@
 ﻿using FriendOrganizer.Model;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
@@ -12,5 +14,6 @@ namespace FriendOrganizer.UI.Data.Repositories
         void Add(Friend friend);
         void Remove(Friend model);
         void RemovePhoneNumber(FriendPhoneNumber model);
+        void UpdateProgrammingCheckList(ObservableCollection<FriendProgrammingLanguages> programmingLanguages, int friendId);
     }
 }

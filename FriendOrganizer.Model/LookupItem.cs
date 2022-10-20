@@ -11,6 +11,15 @@ namespace FriendOrganizer.Model
         public int Id { get; set; }
         public string? DisplayMember { get; set; }
     }
+    public class FriendProgrammingLanguages
+    {
+        public int Id { get; set; }
+        public int FriendId { get; set; }
+        public string? DisplayMember { get; set; }
+        public int ProgrammingLanguageId { get; set; }
+        public string ProgrammingLanguageName { get; set; }    
+        public bool IsChecked { get; set; }
+    }
     public class NullLookupItem : LookupItem
     {
         public new int? Id { get; set; }

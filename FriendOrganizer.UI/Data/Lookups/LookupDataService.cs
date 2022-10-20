@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data
@@ -26,13 +25,50 @@ namespace FriendOrganizer.UI.Data
             }
         }
 
-        public async Task<IEnumerable<LookupItem>> GetprogrammingLanguageLookupAsync()
+        public async Task<IEnumerable<FriendProgrammingLanguages>> GetprogrammingLanguageLookupAsync()
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.ProgrammingLanguages.AsNoTracking().Select(f => new LookupItem { Id = f.Id, DisplayMember = f.Name }).ToListAsync();
+
+                return await ctx.ProgrammingLanguages.AsNoTracking().Select(p => new FriendProgrammingLanguages {Id = p.Id, DisplayMember = p.Name, IsChecked = false }).ToListAsync();
+
             }
         }
 
+        public async Task<IEnumerable<FriendProgrammingLanguages>> GetFriendprogrammingLanguageLookupAsync(int friendId)
+        {
+
+
+        using (var ctx = _contextCreator())
+            {
+                 var fullEntries = await ctx.FriendProgrammingLanguage
+                .Join(
+                    ctx.Friends,
+                    fpl => fpl.FriendId,
+                    f => f.Id,
+                    (fpl, f) => new { fpl, f }
+                )
+                .Join(
+                    ctx.ProgrammingLanguages,
+                    CombinedPl => CombinedPl.fpl.ProgrammingLanguageId,
+                    pl => pl.Id,
+                    (CombinedPl, pl) => new
+                    {
+                        Id = CombinedPl.fpl.Id,
+                        FriendId = CombinedPl.fpl.FriendId,
+                        PrgrammingLangId = CombinedPl.fpl.ProgrammingLanguageId,
+                        ProgrammingLangName = pl.Name
+                    }
+                )
+                .Where(fullEntry => fullEntry.FriendId == friendId).ToListAsync();
+                List<FriendProgrammingLanguages> FriendProgrammingLanguages = new List<FriendProgrammingLanguages>();
+                foreach (var item in fullEntries)
+                {
+                    FriendProgrammingLanguages fpl = new FriendProgrammingLanguages { Id = item.Id, ProgrammingLanguageName = item.ProgrammingLangName, ProgrammingLanguageId = item.PrgrammingLangId, FriendId = item.FriendId };
+                    FriendProgrammingLanguages.Add(fpl);
+                }
+                return FriendProgrammingLanguages;
+            }
+        }
     }
 }

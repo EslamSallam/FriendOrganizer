@@ -6,6 +6,8 @@ namespace FriendOrganizer.UI.Data
 {
     public interface IProgrammingLanguageLookupDataService
     {
-        Task<IEnumerable<LookupItem>> GetprogrammingLanguageLookupAsync();
+        Task<IEnumerable<FriendProgrammingLanguages>> GetprogrammingLanguageLookupAsync();
+
+        Task<IEnumerable<FriendProgrammingLanguages>> GetFriendprogrammingLanguageLookupAsync(int friendId);
     }
 }
