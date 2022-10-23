@@ -31,7 +31,7 @@
             <TextBox Grid.Row="5" Margin="10 0 10 10" Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="6" Margin="10 0" Content="Programming Language"/>
-            <ComboBox   IsEditable="True" Text="{Binding ProgrammingLanguagesTxt}"  ItemsSource="{Binding ProgrammingLanguages}" Grid.Row="7"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Name="cmb">
+            <ComboBox Margin="10"   IsEditable="True" Text="{Binding ProgrammingLanguagesTxt}"  ItemsSource="{Binding ProgrammingLanguages}" Grid.Row="7"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Name="cmb">
                 
                 <ComboBox.ItemTemplate>
 

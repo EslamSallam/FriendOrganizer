@@ -8,41 +8,21 @@ using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
-    public class FriendRepository : IFriendRepository
+    public class FriendRepository : GenericRepository<Friend, FriendOrganizerDBContext>,IFriendRepository 
     {
-        private FriendOrganizerDBContext _context { get; }
         public FriendRepository(FriendOrganizerDBContext context)
+            : base(context)
         {
-            _context = context;
         }
 
-        public async Task<Friend>? GetByIdAsync(int? FriendId)
+        public override async Task<Friend>? GetByIdAsync(int? FriendId)
         {
-            return await _context.Friends.Include(f => f.FriendProgrammingLanguages).Include(f => f.PhoneNumbers).SingleAsync(f => f.Id == FriendId);
-        }
-        public async Task SaveAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
-
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
-
-        public void Add(Friend friend)
-        {
-            _context.Friends.Add(friend);
-        }
-
-        public void Remove(Friend model)
-        {
-            _context.Friends.Remove(model);
+            return await Context.Friends.Include(f => f.FriendProgrammingLanguages).Include(f => f.PhoneNumbers).SingleAsync(f => f.Id == FriendId);
         }
 
         public void RemovePhoneNumber(FriendPhoneNumber model)
         {
-            _context.FriendPhoneNumber.Remove(model);
+            Context.FriendPhoneNumber.Remove(model);
         }
 
         public void UpdateProgrammingCheckList(ObservableCollection<FriendProgrammingLanguages> programmingLanguages, int friendId)
@@ -51,18 +31,18 @@ namespace FriendOrganizer.UI.Data.Repositories
             {
                 var FriendPl = new FriendProgrammingLanguage { Id = item.Id};
                 FriendPl.FriendId = friendId;
-                FriendPl.Friend = _context.Friends.Single(f => f.Id == friendId);
-                FriendPl.ProgrammingLanguage = _context.ProgrammingLanguages.Single(f => f.Id == FriendPl.ProgrammingLanguageId);
+                FriendPl.Friend = Context.Friends.Single(f => f.Id == friendId);
+                FriendPl.ProgrammingLanguage = Context.ProgrammingLanguages.Single(f => f.Id == FriendPl.ProgrammingLanguageId);
                 if (item.IsChecked)
                 {
-                    _context.FriendProgrammingLanguage.AddOrUpdate(FriendPl);
+                    Context.FriendProgrammingLanguage.AddOrUpdate(FriendPl);
                 }
                 else
                 {
-                    var res = _context.FriendProgrammingLanguage.Find(FriendPl);
+                    var res = Context.FriendProgrammingLanguage.Find(FriendPl);
                     if (res != null)
-                    {   
-                        _context.FriendProgrammingLanguage.Remove(FriendPl);
+                    {
+                        Context.FriendProgrammingLanguage.Remove(FriendPl);
                     }
                 }
 
