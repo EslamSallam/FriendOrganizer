@@ -1,4 +1,5 @@
-﻿using FriendOrganizer.UI.ViewModel;
+﻿using FriendOrganizer.UI.View;
+using FriendOrganizer.UI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,6 @@ namespace FriendOrganizer.UI
         {
             MessageBox.Show("Look, it is not that difficult. Just type something!", "Help!");
         }
-       
+
     }
 }

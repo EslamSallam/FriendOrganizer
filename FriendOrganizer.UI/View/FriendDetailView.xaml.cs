@@ -1,8 +1,6 @@
 ﻿using FriendOrganizer.Model;
-using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace FriendOrganizer.UI.View
 {
@@ -16,41 +14,37 @@ namespace FriendOrganizer.UI.View
             InitializeComponent();
         }
 
-        private void ckabc_Checked_1(object sender, RoutedEventArgs e)
+        private void ChkProgrammingLanguages_Checked(object sender, RoutedEventArgs e)
         {
 
+            PrepareProgrammingLanguages();
         }
 
+        private void ChkProgrammingLanguages_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var s = (CheckBox)sender;
+            string languageName = s.Content.ToString();
+            
+            PrepareProgrammingLanguages();
+        }
 
-
-        private void cmb_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        public void PrepareProgrammingLanguages()
         {
             cmb.Text = "";
+
             var list = cmb.ItemsSource;
             foreach (FriendProgrammingLanguages item in list)
             {
-                if (cmb.Text.ToString().Length > 0 && item.IsChecked)
-                {
-                    cmb.Text += ", ";
-
-                }
                 if (item.IsChecked)
                 {
+                    if (cmb.Text != "")
+                    {
+                        cmb.Text += ", ";
+                    }
                     cmb.Text += item.DisplayMember.ToString();
                 }
             }
         }
-
-      
-
-        //private void cmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    //txtLangs.Text = "";
-        //    //foreach (FriendProgrammingLanguages item in cmb.ItemsSource)
-        //    //{
-        //    //    txtLangs.Text += item.DisplayMember.ToString(); 
-
-        //    //}
-        //}
+   
     }
 }

@@ -6,7 +6,6 @@ using FriendOrganizer.UI.Events;
 using FriendOrganizer.UI.Services;
 using FriendOrganizer.UI.Wrapper;
 using Prism.Events;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -32,11 +31,37 @@ namespace FriendOrganizer.UI.ViewModel
         public ICommand AddPhoneNumberCommand { get; }
         public ICommand RemovePhoneNumberCommand { get; set; }
         public ICommand AddFriendProgrammingLanguageCommand { get; set; }
-        public ObservableCollection<FriendProgrammingLanguages> ProgrammingLanguages { get; private set; } 
+        public ObservableCollection<FriendProgrammingLanguages>? ProgrammingLanguages { get; private set; }
         public ObservableCollection<FriendPhoneNumberWrapper> PhoneNumbers { get; }
         private FriendPhoneNumberWrapper _selectedPhoneNumber;
+        private string _programmingLanguagesTxt;
+        public string ProgrammingLanguagesTxt
+        {
+            get
+            {
+                return _programmingLanguagesTxt;
+            }
+            set
+            {
+                if (value != typeof(FriendOrganizer.Model.FriendProgrammingLanguages).ToString())
+                {
 
-        public FriendPhoneNumberWrapper SelectedPhoneNumber {
+                    _programmingLanguagesTxt = value;
+                    OnPropertyChanged();
+                    CheckProgrammingList();
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        private async void CheckProgrammingList()
+        {
+            HasChanges = await _programmingLanguageLookupDataService.GetProgrammingListForFriend(Friend.Id, ProgrammingLanguagesTxt);
+            return;
+        }
+
+        public FriendPhoneNumberWrapper SelectedPhoneNumber
+        {
             get { return _selectedPhoneNumber; }
             set
             {
@@ -61,7 +86,7 @@ namespace FriendOrganizer.UI.ViewModel
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
             RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
-            //AddFriendProgrammingLanguageCommand = new DelegateCommand(UpdateProgrammingLanguageToFriend);
+            AddFriendProgrammingLanguageCommand = new DelegateCommand(UpdateProgrammingLanguageToFriend);
 
             ProgrammingLanguages = new ObservableCollection<FriendProgrammingLanguages>();
             PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
@@ -69,7 +94,8 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void UpdateProgrammingLanguageToFriend(object? obj)
         {
-            throw new NotImplementedException();
+
+            return;
         }
 
         private bool OnRemovePhoneNumberCanExecute(object? arg)
@@ -116,7 +142,8 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void onSaveExecute(object? obj)
         {
-            FriendDataService.UpdateProgrammingCheckList(ProgrammingLanguages,Friend.Id);
+            _programmingLanguageLookupDataService.UpdateProgrammingListForFriend(Friend.Id, ProgrammingLanguages);
+            // FriendDataService.UpdateProgrammingCheckList(ProgrammingLanguages,Friend.Id);
             await FriendDataService.SaveAsync();
             HasChanges = FriendDataService.HasChanges();
             _eventAggregator.GetEvent<AfterFriendSavedEvent>().Publish(
@@ -180,14 +207,23 @@ namespace FriendOrganizer.UI.ViewModel
 
             foreach (var fpl in lookupItems)
             {
-               var res = ProgrammingLanguages.FirstOrDefault(f => f.Id == fpl.ProgrammingLanguageId);
+                var res = ProgrammingLanguages.FirstOrDefault(f => f.Id == fpl.ProgrammingLanguageId);
+                ProgrammingLanguages.First(f => f.Id == fpl.ProgrammingLanguageId).ProgrammingLanguageId = fpl.ProgrammingLanguageId;
                 if (res != null)
                 {
                     ProgrammingLanguages.First(f => f.Id == fpl.ProgrammingLanguageId).IsChecked = true;
                     ProgrammingLanguages.First(f => f.Id == fpl.ProgrammingLanguageId).FriendId = fpl.FriendId;
+                    
                     ProgrammingLanguages.First(f => f.Id == fpl.ProgrammingLanguageId).Id = fpl.Id;
+                    if (ProgrammingLanguagesTxt != null && ProgrammingLanguagesTxt != "")
+                    {
+                        ProgrammingLanguagesTxt += ", ";
+                    }
+                    ProgrammingLanguagesTxt += fpl.ProgrammingLanguageName;
+
                 }
             }
+
 
         }
 

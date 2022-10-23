@@ -61,7 +61,7 @@ namespace FriendOrganizer.UI.Data.Repositories
                 {
                     var res = _context.FriendProgrammingLanguage.Find(FriendPl);
                     if (res != null)
-                    {
+                    {   
                         _context.FriendProgrammingLanguage.Remove(FriendPl);
                     }
                 }

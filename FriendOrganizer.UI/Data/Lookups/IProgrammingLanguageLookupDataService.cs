@@ -9,5 +9,7 @@ namespace FriendOrganizer.UI.Data
         Task<IEnumerable<FriendProgrammingLanguages>> GetprogrammingLanguageLookupAsync();
 
         Task<IEnumerable<FriendProgrammingLanguages>> GetFriendprogrammingLanguageLookupAsync(int friendId);
+        Task<bool> GetProgrammingListForFriend(int FriendId, string LanguagesName);
+        void UpdateProgrammingListForFriend(int id, IEnumerable<FriendProgrammingLanguages> ProgrammingLanguages);
     }
 }
