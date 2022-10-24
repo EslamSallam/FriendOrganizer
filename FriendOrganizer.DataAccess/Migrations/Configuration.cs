@@ -41,6 +41,19 @@
             context.FriendProgrammingLanguage.AddOrUpdate(
                 new FriendProgrammingLanguage { FriendId = context.Friends.First().Id, ProgrammingLanguageId = context.ProgrammingLanguages.First().Id }
                 );
+
+            context.Meetings.AddOrUpdate(
+                new Meeting
+                {
+                    Title = "C# course",
+                    DateFrom = new DateTime(2016, 1, 1),
+                    DateTo = new DateTime(2016, 1, 1),
+                    Friends = new List<Friend>
+                    {
+                        context.Friends.Single(f => f.FirstName == "Ahmed" && f.LastName == "Hamed"),
+                        context.Friends.Single(f => f.FirstName == "Maged" && f.LastName == "Ahmed")
+                    }
+                });
         }
     }
 }

@@ -23,7 +23,7 @@ namespace FriendOrganizer.UI.Wrapper
 
 		protected virtual TValue GetValue<TValue>([CallerMemberName] string? PropertyName = null)
 		{
-			return (TValue)typeof(T).GetProperty(PropertyName).GetValue(Model);
+            return (TValue)typeof(T).GetProperty(PropertyName).GetValue(Model);
 		}
 
 		private void validatePropertyInternal(string propertyName)

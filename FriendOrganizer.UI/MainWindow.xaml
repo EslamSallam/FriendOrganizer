@@ -12,6 +12,9 @@
         <DataTemplate DataType="{x:Type Viewmodel:FriendDetailViewModel}" >
             <view:FriendDetailView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type Viewmodel:MeetingDetailViewModel}">
+            <view:MeetingDetailView/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -25,6 +28,7 @@
         <Menu Grid.Row="0" Grid.ColumnSpan="2" Height="30" FontSize="16">
             <MenuItem Header="Create" Height="30">
                 <MenuItem Header="New Friend" Height="30" Command="{Binding CreateNewFriendCommand}"/>
+                <MenuItem Header="New Meeting" Height="30" Command="{Binding CreateNewMeetingCommand}"/>
             </MenuItem>
         </Menu>
         <!--<Menu DockPanel.Dock ="Top" HorizontalAlignment="Left" Background="White" BorderBrush 
@@ -46,7 +50,9 @@
             </MenuItem>
         </Menu>-->
         <view:NavigationView  Grid.Row="1" Grid.Column="0" DataContext="{Binding NavigationViewModel}" />
-        <view:FriendDetailView Grid.Row="1" Grid.Column="1" DataContext="{Binding DetailViewModel}"/>
+        <ContentControl Grid.Row="1"
+                           Grid.Column="1"
+                           Content="{Binding DetailViewModel}"/>
         
     </Grid>
 </Window>

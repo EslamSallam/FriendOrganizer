@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data
 {
-    public class LookupDataService : IFriendLookupDataService, IProgrammingLanguageLookupDataService
+    public class LookupDataService : IFriendLookupDataService, IMeetingLookupDataService, IProgrammingLanguageLookupDataService
     {
         private Func<FriendOrganizerDBContext> _contextCreator { get; }
         public LookupDataService(Func<FriendOrganizerDBContext> contextCreator)
@@ -27,6 +27,15 @@ namespace FriendOrganizer.UI.Data
                 return await ctx.Friends.AsNoTracking().Select(f => new LookupItem { Id = f.Id, DisplayMember = f.FirstName + " " + f.LastName }).ToListAsync();
             }
         }
+
+        public async Task<IEnumerable<LookupItem>> GetMeetingLookupAsync()
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Meetings.AsNoTracking().Select(f => new LookupItem { Id = f.Id, DisplayMember = f.Title }).ToListAsync();
+            }
+        }
+
 
         public async Task<IEnumerable<FriendProgrammingLanguages>> GetprogrammingLanguageLookupAsync()
         {
@@ -139,6 +148,7 @@ namespace FriendOrganizer.UI.Data
             return "Server=.;Database=FriendOrganizerDb;Trusted_Connection=True;";
         }
 
+       
     }
 
 }

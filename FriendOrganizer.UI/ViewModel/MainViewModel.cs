@@ -13,10 +13,12 @@ namespace FriendOrganizer.UI.ViewModel
     {
         private INavigationViewModel _navigationViewModel;
         private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
+        private Func<IMeetingDetailViewModel> _meetingDetailViewModelCreator;
         private IDetailViewModel _detailViewModel;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
         public ICommand CreateNewFriendCommand { get; }
+        public ICommand CreateNewMeetingCommand { get; }
 
 
         public INavigationViewModel NavigationViewModel
@@ -44,16 +46,20 @@ namespace FriendOrganizer.UI.ViewModel
         public MainViewModel()
         {
         }
-        public MainViewModel(INavigationViewModel navigationViewModel, Func<IFriendDetailViewModel> friendDetailViewModelCreator, IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
+        public MainViewModel(INavigationViewModel navigationViewModel, Func<IFriendDetailViewModel> friendDetailViewModelCreator,Func<IMeetingDetailViewModel> meetingDetailViewModelCreator, IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
         {
             _navigationViewModel = navigationViewModel;
             _friendDetailViewModelCreator = friendDetailViewModelCreator;
+            _meetingDetailViewModelCreator = meetingDetailViewModelCreator;
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
-            _eventAggregator.GetEvent<OpenFriendDetailViewEvent>().Subscribe(onOpenFriendDetailView);
-            _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Subscribe(AfterFriendDeleted);
+            _eventAggregator.GetEvent<OpenDetailViewEvent>().Subscribe(onOpenDetailView);
+            _eventAggregator.GetEvent<AfterDetailDeletedEvent>().Subscribe(AfterDetailDeleted);
             CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
+            CreateNewMeetingCommand = new DelegateCommand(OnCreateNewMeetingExecute);
         }
+
+
         public async Task LoadAsync()
         {
             await NavigationViewModel.LoadAsync();
@@ -62,10 +68,14 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void OnCreateNewFriendExecute(object? obj)
         {
-            onOpenFriendDetailView(null);
+            onOpenDetailView(new OpenDetailViewEventArgs { ViewModelName = nameof(FriendDetailViewModel)});
+        }
+        private void OnCreateNewMeetingExecute(object? obj)
+        {
+            onOpenDetailView(new OpenDetailViewEventArgs { ViewModelName = nameof(MeetingDetailViewModel) });
         }
 
-        private async void onOpenFriendDetailView(int? friendId)
+        private async void onOpenDetailView(OpenDetailViewEventArgs args)
         {
             if (DetailViewModel != null && DetailViewModel.HasChanges)
             {
@@ -75,10 +85,20 @@ namespace FriendOrganizer.UI.ViewModel
                     return;
                 }
             }
-            DetailViewModel = _friendDetailViewModelCreator();
-            await DetailViewModel.LoadAsync(friendId);
+            switch (args.ViewModelName)
+            {
+                case nameof(FriendDetailViewModel):
+                    DetailViewModel = _friendDetailViewModelCreator();
+                    break;
+                case nameof(MeetingDetailViewModel):
+                    DetailViewModel = _meetingDetailViewModelCreator();
+                    break;
+                default:
+                    throw new Exception($"View Model {args.ViewModelName} not mapped");
+            }
+            await DetailViewModel.LoadAsync(args.Id);
         }
-        private void AfterFriendDeleted(int obj)
+        private void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
         {
             DetailViewModel = null;
         }

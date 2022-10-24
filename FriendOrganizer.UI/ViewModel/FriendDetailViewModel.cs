@@ -30,7 +30,6 @@ namespace FriendOrganizer.UI.ViewModel
         public ICommand DeleteCommand { get; }
         public ICommand AddPhoneNumberCommand { get; }
         public ICommand RemovePhoneNumberCommand { get; set; }
-        public ICommand AddFriendProgrammingLanguageCommand { get; set; }
         public ObservableCollection<FriendProgrammingLanguages>? ProgrammingLanguages { get; private set; }
         public ObservableCollection<FriendPhoneNumberWrapper> PhoneNumbers { get; }
         private FriendPhoneNumberWrapper _selectedPhoneNumber;
@@ -86,17 +85,11 @@ namespace FriendOrganizer.UI.ViewModel
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
             RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
-            AddFriendProgrammingLanguageCommand = new DelegateCommand(UpdateProgrammingLanguageToFriend);
 
             ProgrammingLanguages = new ObservableCollection<FriendProgrammingLanguages>();
             PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
         }
 
-        private void UpdateProgrammingLanguageToFriend(object? obj)
-        {
-
-            return;
-        }
 
         private bool OnRemovePhoneNumberCanExecute(object? arg)
         {
@@ -131,27 +124,29 @@ namespace FriendOrganizer.UI.ViewModel
             }
             FriendDataService.Remove(Friend.Model);
             await FriendDataService.SaveAsync();
-            _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Publish(Friend.Id);
+            _eventAggregator.GetEvent<AfterDetailDeletedEvent>().Publish(
+                new AfterDetailDeletedEventArgs
+                { Id = Friend.Id ,ViewModelName = nameof(FriendDetailViewModel) }
+                );
         }
 
         private bool onSaveCanExecute(object? arg)
         {
-            //TODO :: check for vaild input Friend
             return Friend != null && !Friend.HasErrors && HasChanges && PhoneNumbers.All(pn => !pn.HasErrors);
         }
 
         private async void onSaveExecute(object? obj)
         {
-            _programmingLanguageLookupDataService.UpdateProgrammingListForFriend(Friend.Id, ProgrammingLanguages);
-            // FriendDataService.UpdateProgrammingCheckList(ProgrammingLanguages,Friend.Id);
             await FriendDataService.SaveAsync();
             HasChanges = FriendDataService.HasChanges();
-            _eventAggregator.GetEvent<AfterFriendSavedEvent>().Publish(
-            new AfterFriendSavedEventArgs
+            _eventAggregator.GetEvent<AfterDetailSavedEvent>().Publish(
+            new AfterDetailSavedEventArgs
             {
                 Id = friend.Id,
-                DisplayMember = $"{friend.FirstName} {friend.LastName}"
+                DisplayMember = $"{friend.FirstName} {friend.LastName}",
+                ViewModelName = nameof(FriendDetailViewModel)
             });
+            _programmingLanguageLookupDataService.UpdateProgrammingListForFriend(Friend.Id, ProgrammingLanguages);
         }
 
         private bool _hasChanges;
