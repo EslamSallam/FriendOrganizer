@@ -27,6 +27,8 @@ namespace FriendOrganizer.UI.ViewModel
         public ICommand DeleteCommand { get; }
         public ICommand AddFriendCommand { get; }
         public ICommand RemoveFriendCommand { get; }
+        public ICommand BulkRemoveFriendsCommand { get; }
+        public ICommand BulkAddFriendsCommand { get; }
         private bool _hasChanges;
         public bool HasChanges
         {
@@ -105,11 +107,42 @@ namespace FriendOrganizer.UI.ViewModel
             AvailableFriends = new ObservableCollection<Friend>();
             AddFriendCommand = new DelegateCommand(AddFriendToMeeting,AddFriendToMeetingCanExecute);
             RemoveFriendCommand = new DelegateCommand(RemoveFriendFromMeeting,RemoveFriendFromMeetingCanExecute);
+            BulkRemoveFriendsCommand = new DelegateCommand(BulkRemoveFriendsExecute);
+            BulkAddFriendsCommand = new DelegateCommand(BulkAddFriendsExecute);
             SaveCommand = new DelegateCommand(onSaveExecute, onSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
         }
 
-     
+        private void BulkAddFriendsExecute(object? obj)
+        {
+
+            foreach (Friend friend in AvailableFriends)
+            {
+                Meeting.Model.Friends.Add(friend);
+            }
+            foreach (Friend friend in AvailableFriends)
+            {
+                AddedFriends.Add(friend);
+            }
+            _availabeFriends.Clear();
+            HasChanges = _meetingRepository.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+        }
+
+        private void BulkRemoveFriendsExecute(object? obj)
+        {
+            foreach (Friend friend in AddedFriends)
+            {
+                Meeting.Model.Friends.Remove(friend);
+            }
+            foreach (Friend friend in AddedFriends)
+            {
+                AvailableFriends.Add(friend);
+            }
+            _addedFriends.Clear();
+            HasChanges = _meetingRepository.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+        }
 
         private bool AddFriendToMeetingCanExecute(object? arg)
         {
@@ -191,6 +224,8 @@ namespace FriendOrganizer.UI.ViewModel
             {
                 // Trick to trigger the validation
                 Meeting.Title = "";
+                meeting.Model.DateFrom = meeting.DateFrom;
+                meeting.Model.DateTo = meeting.DateTo;
             }
 
             // Load all Friends 
@@ -221,7 +256,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             var Meeting = new Meeting();
             _meetingRepository.Add(Meeting);
-            return  Meeting;
+            return Meeting;
         }
     }
 }

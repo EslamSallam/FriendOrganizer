@@ -43,17 +43,23 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Added Friends"/>
-            <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding AddedFriends}" SelectedItem="{Binding SelectedAddedFriend}"/>
-
-            <StackPanel Grid.Row="1" Grid.Column="1">
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+                <Label Content="Added Friends"/>
+                <ListView MinHeight="250" ItemsSource="{Binding AddedFriends}" SelectedItem="{Binding SelectedAddedFriend}"/>
+                <Button Content="Bulk Remove" Margin="10 0 10 10" Command="{Binding BulkRemoveFriendsCommand}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1">
                 <Button Content="&lt;&lt;" Margin="10" Command="{Binding AddFriendCommand}"/>
                 <Button Content="&gt;&gt;" Margin="10 0 10 10" Command="{Binding RemoveFriendCommand}"/>
             </StackPanel>
 
-            <Label Grid.Row="0" Content="Available Friends" Grid.Column="2"/>
-            <ListView Grid.Row="1" Grid.Column="2" ItemsSource="{Binding AvailableFriends}" SelectedItem="{Binding SelectedAvailableFriend}"/>
+            <StackPanel Grid.Row="0" Grid.Column="2"  Orientation="Vertical">
+                <Label Content="Available Friends"/>
+                <ListView MinHeight="250" ItemsSource="{Binding AvailableFriends}" SelectedItem="{Binding SelectedAvailableFriend}"/>
+                <Button Content="Bulk Add" Margin="10 0 10 10" Command="{Binding BulkAddFriendsCommand}"/>
 
+            </StackPanel>
+            
         </Grid>
         
         
