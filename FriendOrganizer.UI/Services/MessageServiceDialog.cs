@@ -21,5 +21,9 @@ namespace FriendOrganizer.UI.Services
 
             return result == MessageBoxResult.OK? MessageDialogResult.OK : MessageDialogResult.Cancel;
         }
+        public void ShowInfoDialog(string text)
+        {
+            MessageBox.Show(text);
+        }
     }
 }

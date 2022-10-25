@@ -42,20 +42,19 @@ namespace FriendOrganizer.UI.Wrapper
 			switch (propertyName)
 			{
 				case nameof(FirstName):
-					if (FirstName.Length <= 5)
+					if (FirstName.Length < 2)
 					{
-						yield return $"FirstName Should be Greater than 5 chars.";
+						yield return $"FirstName Should be Greater than or equal 2 chars.";
                     }
                     break;
                 case nameof(LastName):
-                    if (LastName.Length <= 5)
+                    if (LastName.Length < 2)
                     {
-                        yield return $"LastName Should be Greater than 5 chars.";
+                        yield return $"LastName Should be Greater than or equal 2 chars.";
                     }
                     break;
                 default:
-                        break;
-					
+                    break;
 			}
             OnPropertyChanged("UIFirstError");
 		}

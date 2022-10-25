@@ -15,6 +15,11 @@ namespace FriendOrganizer.UI.Data.Repositories
         {
         }
 
+        public async Task<List<Friend>> getallFriendsAsync()
+        {
+            return await Context.Set<Friend>().ToListAsync();
+        }
+
         public override async Task<Meeting>? GetByIdAsync(int? Id)
         {
             return await Context.Meetings.Include(m => m.Friends).SingleAsync(m => m.Id == Id);

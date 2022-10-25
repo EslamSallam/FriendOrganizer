@@ -20,6 +20,11 @@ namespace FriendOrganizer.UI.Data.Repositories
             return await Context.Friends.Include(f => f.FriendProgrammingLanguages).Include(f => f.PhoneNumbers).SingleAsync(f => f.Id == FriendId);
         }
 
+        public async Task<bool> HasMeetingAsync(int friendId)
+        {
+            return await Context.Meetings.AsNoTracking().Include(m => m.Friends).AnyAsync(m => m.Friends.Any(f => f.Id == friendId));
+        }
+
         public void RemovePhoneNumber(FriendPhoneNumber model)
         {
             Context.FriendPhoneNumber.Remove(model);

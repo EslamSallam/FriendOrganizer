@@ -1,4 +1,5 @@
-﻿using FriendOrganizer.Model;
+﻿using ControlzEx.Standard;
+using FriendOrganizer.Model;
 using FriendOrganizer.UI.Command;
 using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.Data.Repositories;
@@ -117,6 +118,11 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void OnDeleteExecute(object? obj)
         {
+            if (await FriendDataService.HasMeetingAsync(Friend.Id))
+            {
+                _messageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted, as this friend is part of a meeting");
+                return;
+            }
             var res = _messageDialogService.ShowOkCancelDialog($"Do you really want to delete {Friend.FirstName} {Friend.LastName}", "Question");
             if (res == MessageDialogService.MessageDialogResult.Cancel)
             {
