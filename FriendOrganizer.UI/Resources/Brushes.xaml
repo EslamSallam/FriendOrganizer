@@ -2,4 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="HeaderBackgroundBrush" Color="#f05A28"/>
     <SolidColorBrush x:Key="HeaderForegroundBrush" Color="Black"/>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 </ResourceDictionary>

@@ -6,8 +6,9 @@
         xmlns:view="clr-namespace:FriendOrganizer.UI.View"
         xmlns:Viewmodel="clr-namespace:FriendOrganizer.UI.ViewModel"
         xmlns:local="clr-namespace:FriendOrganizer.UI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="700" Width="1000" Loaded="Window_Loaded" FontSize="20">
+        Title="MainWindow" MinHeight="750" Width="1000" Loaded="Window_Loaded" FontSize="20">
     <Window.Resources>
         <DataTemplate DataType="{x:Type Viewmodel:FriendDetailViewModel}" >
             <view:FriendDetailView/>
@@ -50,9 +51,23 @@
             </MenuItem>
         </Menu>-->
         <view:NavigationView  Grid.Row="1" Grid.Column="0" DataContext="{Binding NavigationViewModel}" />
-        <ContentControl Grid.Row="1"
-                           Grid.Column="1"
-                           Content="{Binding DetailViewModel}"/>
-        
+        <TabControl Grid.Row="1"
+                    Grid.Column="1"
+                    ItemsSource="{Binding DetailViewModels}"
+                    SelectedItem="{Binding SelectedDetailViewModel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    HorizontalContentAlignment="Left"
+                    materialDesign:ColorZoneAssist.Mode="Custom"
+                    materialDesign:ColorZoneAssist.Foreground="gray"
+                    materialDesign:ColorZoneAssist.Background="{DynamicResource MaterialDesignCardBackground}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}"  />
+                        <TextBlock Text="*" Visibility="{Binding HasChanges,Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
+
     </Grid>
 </Window>

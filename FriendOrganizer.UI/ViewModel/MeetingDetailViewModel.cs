@@ -44,6 +44,17 @@ namespace FriendOrganizer.UI.ViewModel
 
             }
         }
+
+        private int _id;
+
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+        private string _title;
+        public string Title { get { return _title; } set { _title = value; } }
+
         private MeetingWrapper meeting;
         public MeetingWrapper Meeting
         {
@@ -179,6 +190,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             await _meetingRepository.SaveAsync();
             HasChanges = _meetingRepository.HasChanges();
+            Id = meeting.Id;
             _eventAggregator.GetEvent<AfterDetailSavedEvent>().Publish(
             new AfterDetailSavedEventArgs
             {
@@ -208,6 +220,8 @@ namespace FriendOrganizer.UI.ViewModel
         {
             var __meeting = MeetingId.HasValue ? await _meetingRepository.GetByIdAsync(MeetingId.Value) : CreateNewMeeting();
             Meeting = new MeetingWrapper(__meeting);
+            //Set the Id for Navigation for the Detail collection
+            Id = Meeting.Id;
             Meeting.PropertyChanged += (s, e) =>
             {
                 if (!HasChanges)
@@ -217,6 +231,10 @@ namespace FriendOrganizer.UI.ViewModel
                 if (e.PropertyName == nameof(Meeting.HasErrors))
                 {
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+                if (e.PropertyName == nameof(Meeting.Title))
+                {
+                    SetTitle();
                 }
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
@@ -232,6 +250,12 @@ namespace FriendOrganizer.UI.ViewModel
             _allFriends = await _meetingRepository.getallFriendsAsync();
 
             SetupPickList();
+            SetTitle();
+        }
+
+        private void SetTitle()
+        {
+            Title = Meeting.Title; 
         }
 
         private void SetupPickList()

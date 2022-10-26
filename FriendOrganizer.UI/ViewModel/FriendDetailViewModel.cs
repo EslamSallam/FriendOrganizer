@@ -7,6 +7,7 @@ using FriendOrganizer.UI.Events;
 using FriendOrganizer.UI.Services;
 using FriendOrganizer.UI.Wrapper;
 using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -145,6 +146,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             await FriendDataService.SaveAsync();
             HasChanges = FriendDataService.HasChanges();
+            Id = friend.Id;
             _eventAggregator.GetEvent<AfterDetailSavedEvent>().Publish(
             new AfterDetailSavedEventArgs
             {
@@ -171,11 +173,23 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
+        private int _id;
+
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+        private string _title;
+        public string Title { get { return _title; } set { _title = value; } }
 
         public async Task LoadAsync(int? friendId)
         {
             var friend = friendId.HasValue ? await FriendDataService.GetByIdAsync(friendId.Value) : CreateNewFriend();
             Friend = new FriendWrapper(friend);
+            //Set the Id for navigation in Details Collection
+            Id = friend.Id;
             Friend.PropertyChanged += (s, e) =>
             {
                 if (!HasChanges)
@@ -186,6 +200,11 @@ namespace FriendOrganizer.UI.ViewModel
                 {
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
+                if (e.PropertyName == nameof(Friend.FirstName)
+                    || e.PropertyName == nameof(Friend.LastName))
+                {
+                    SetTitle();
+                }
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
             if (Friend.Id == 0)
@@ -194,7 +213,7 @@ namespace FriendOrganizer.UI.ViewModel
                 Friend.FirstName = "";
                 Friend.LastName = "";
             }
-
+       
             InitializePhoneNumbers(friend.PhoneNumbers);
 
             ProgrammingLanguages.Clear();
@@ -224,8 +243,13 @@ namespace FriendOrganizer.UI.ViewModel
 
                 }
             }
+            SetTitle();
 
+        }
 
+        private void SetTitle()
+        {
+            Title = $"{friend.FirstName} {Friend.LastName}";
         }
 
         private void InitializePhoneNumbers(ICollection<FriendPhoneNumber> phoneNumbers)

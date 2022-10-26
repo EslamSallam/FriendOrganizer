@@ -55,5 +55,9 @@ namespace FriendOrganizer.UI
             MessageBox.Show("Look, it is not that difficult. Just type something!", "Help!");
         }
 
+        private void TabControl_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
