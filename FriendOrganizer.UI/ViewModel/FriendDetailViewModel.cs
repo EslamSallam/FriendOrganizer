@@ -182,7 +182,7 @@ namespace FriendOrganizer.UI.ViewModel
         }
 
         private string _title;
-        public string Title { get { return _title; } set { _title = value; } }
+        public string Title { get { return _title; } set { _title = value; OnPropertyChanged(); } }
 
         public async Task LoadAsync(int? friendId)
         {

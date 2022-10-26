@@ -62,7 +62,7 @@
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Title}"  />
+                        <TextBlock Text="{Binding Title,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
                         <TextBlock Text="*" Visibility="{Binding HasChanges,Converter={StaticResource BooleanToVisibilityConverter}}" />
                     </StackPanel>
                 </DataTemplate>

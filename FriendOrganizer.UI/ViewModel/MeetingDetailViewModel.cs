@@ -53,7 +53,7 @@ namespace FriendOrganizer.UI.ViewModel
             set { _id = value; }
         }
         private string _title;
-        public string Title { get { return _title; } set { _title = value; } }
+        public string Title { get { return _title; } set { _title = value; OnPropertyChanged(); } }
 
         private MeetingWrapper meeting;
         public MeetingWrapper Meeting
