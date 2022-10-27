@@ -31,6 +31,9 @@ namespace FriendOrganizer.UI.ViewModel
         public ICommand DeleteCommand { get; }
         public ICommand AddPhoneNumberCommand { get; }
         public ICommand RemovePhoneNumberCommand { get; set; }
+
+        public ICommand DeleteDetailViewCommand { get; set; }
+
         public ObservableCollection<FriendProgrammingLanguages>? ProgrammingLanguages { get; private set; }
         public ObservableCollection<FriendPhoneNumberWrapper> PhoneNumbers { get; }
         private FriendPhoneNumberWrapper _selectedPhoneNumber;
@@ -86,11 +89,16 @@ namespace FriendOrganizer.UI.ViewModel
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
             RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
+            DeleteDetailViewCommand = new DelegateCommand(OnDeleteDetailView);
 
             ProgrammingLanguages = new ObservableCollection<FriendProgrammingLanguages>();
             PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
         }
 
+        private void OnDeleteDetailView(object? obj)
+        {
+            _eventAggregator.GetEvent<AfterDetailClosedEvent>().Publish(new AfterDetailClosedEventArgs { Id=this.Id, ViewModelName = nameof(FriendDetailViewModel)});
+        }
 
         private bool OnRemovePhoneNumberCanExecute(object? arg)
         {

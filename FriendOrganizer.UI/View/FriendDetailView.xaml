@@ -18,20 +18,22 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition />
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Margin="10 10 10 0" Content="FirstName"/>
-            <TextBox Grid.Row="1" Margin="10 0 10 10" Text="{Binding Friend.FirstName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Grid.Row="0" HorizontalAlignment="Right" Width="40" Content="X" Margin="2" Command="{Binding DeleteDetailViewCommand}"/>
+            <Label Grid.Row="1" Margin="10 10 10 0" Content="FirstName"/>
+            <TextBox Grid.Row="2" Margin="10 0 10 10" Text="{Binding Friend.FirstName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Label Grid.Row="2" Margin="10 0" Content="LastName"/>
-            <TextBox Grid.Row="3" Margin="10 0 10 10" Text="{Binding Friend.LastName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Grid.Row="3" Margin="10 0" Content="LastName"/>
+            <TextBox Grid.Row="4" Margin="10 0 10 10" Text="{Binding Friend.LastName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Label Grid.Row="4" Margin="10 0" Content="Email"/>
-            <TextBox Grid.Row="5" Margin="10 0 10 10" Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Grid.Row="5" Margin="10 0" Content="Email"/>
+            <TextBox Grid.Row="6" Margin="10 0 10 10" Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Label Grid.Row="6" Margin="10 0" Content="Programming Language"/>
-            <ComboBox Margin="10"   IsEditable="True" Text="{Binding ProgrammingLanguagesTxt}"  ItemsSource="{Binding ProgrammingLanguages}" Grid.Row="7"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Name="cmb">
+            <Label Grid.Row="7" Margin="10 0" Content="Programming Language"/>
+            <ComboBox Grid.Row="8" IsEditable="True" Margin="10" Text="{Binding ProgrammingLanguagesTxt}"  ItemsSource="{Binding ProgrammingLanguages}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Name="cmb">
                 
                 <ComboBox.ItemTemplate>
 
@@ -42,25 +44,7 @@
                 </ComboBox.ItemTemplate>
 
             </ComboBox>
-            <!--<ScrollViewer Grid.Row="7">
-               
-                --><!--<ItemsControl Grid.Row="7" ItemsSource="{Binding ProgrammingLanguages}" >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Margin="10 2" IsChecked="{Binding IsChecked}" Content="{Binding DisplayMember}" >
-                                
-                            </CheckBox>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>--><!--
-            </ScrollViewer>-->
-            <!--<ComboBox Grid.Row="7" Margin="10 0 10 10" ItemsSource="{Binding ProgrammingLanguages}" 
-                      DisplayMemberPath="DisplayMember"
-                      SelectedValuePath="Id"
-                      SelectedValue="{Binding Friend.FavoriteLanguageId,Mode=TwoWay}"/>-->
-            <!--<Label Grid.Row="8" Content="{Binding Friend.UIFirstError,UpdateSourceTrigger=PropertyChanged}" FontSize="20" Foreground="Red" 
-                   ToolTip="{Binding Friend.UIFirstError, UpdateSourceTrigger=PropertyChanged}" />-->
-            <DockPanel Grid.Row="8" Margin="10">
+           <DockPanel Grid.Row="9" Margin="10">
                 <StackPanel DockPanel.Dock="Right">
                     <Button Content="Add" Width="125" Margin="10" Command="{Binding AddPhoneNumberCommand}" />
                     <Button Content="Remove" Width="125" Margin="10" Command="{Binding RemovePhoneNumberCommand}" />
@@ -72,7 +56,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
-            <StackPanel Grid.Row="9" Orientation="Horizontal">
+            <StackPanel Grid.Row="10" Orientation="Horizontal">
                 <Button Margin="10" HorizontalAlignment="Left" Width="100" Height="30" Content="Save" Command="{Binding SaveCommand}" />
                 <Button Margin="10" HorizontalAlignment="Left" Width="100" Height="30" Content="Delete" Command="{Binding DeleteCommand}" />
             </StackPanel>
