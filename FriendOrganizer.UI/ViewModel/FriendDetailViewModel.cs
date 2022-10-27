@@ -1,5 +1,4 @@
-﻿using ControlzEx.Standard;
-using FriendOrganizer.Model;
+﻿using FriendOrganizer.Model;
 using FriendOrganizer.UI.Command;
 using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.Data.Repositories;
@@ -7,7 +6,6 @@ using FriendOrganizer.UI.Events;
 using FriendOrganizer.UI.Services;
 using FriendOrganizer.UI.Wrapper;
 using Prism.Events;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

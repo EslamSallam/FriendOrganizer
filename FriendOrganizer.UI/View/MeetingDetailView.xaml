@@ -21,18 +21,18 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Margin="10 10 10 0" Content="Title"/>
-            <Button Grid.Column="1"  HorizontalAlignment="Right" Width="40" Content="X" Margin="0" Command="{Binding DeleteDetailViewCommand}"/>
+            <Label Grid.Row="0" Margin="10 0" Content="Title"/>
+            <Button Grid.Column="1"  HorizontalAlignment="Right" Width="40" Content="X" Margin="10 0 10 10" Command="{Binding DeleteDetailViewCommand}"/>
         </Grid>
-        <TextBox Grid.Row="1" Text="{Binding Meeting.Title,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Margin="10 0 10 10" Grid.Row="1" Text="{Binding Meeting.Title,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Row="2" Content="Start"/>
-        <DatePicker Grid.Row="3" SelectedDate="{Binding Meeting.DateFrom,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Margin="10 0" Grid.Row="2" Content="Start"/>
+        <DatePicker Margin="10 0 10 10" Grid.Row="3" SelectedDate="{Binding Meeting.DateFrom,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Row="4" Content="End"/>
-        <DatePicker Grid.Row="5" SelectedDate="{Binding Meeting.DateTo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Margin="10 0" Grid.Row="4" Content="End"/>
+        <DatePicker Margin="10 0 10 10" Grid.Row="5" SelectedDate="{Binding Meeting.DateTo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
         <Grid Grid.Row="6">
             <Grid.Resources>
