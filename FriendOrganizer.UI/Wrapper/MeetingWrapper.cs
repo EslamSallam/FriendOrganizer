@@ -22,7 +22,7 @@ namespace FriendOrganizer.UI.Wrapper
         public DateTime DateFrom
         {
             get
-            { return Model.DateFrom != new DateTime() ? Model.DateFrom : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day); }
+            { return Model.DateFrom != new DateTime() ? Model.DateFrom : DateTime.Now; }
             set
             { 
                 SetValue(value);
@@ -36,7 +36,7 @@ namespace FriendOrganizer.UI.Wrapper
         public DateTime DateTo
         {
             get
-            { return Model.DateTo != new DateTime() ? Model.DateTo : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day); }
+            { return Model.DateTo != new DateTime() ? Model.DateTo : DateTime.Now; }
             set { 
                 SetValue(value);
                 if (DateTo < DateFrom)
