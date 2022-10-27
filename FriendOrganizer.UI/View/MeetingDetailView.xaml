@@ -15,21 +15,26 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" HorizontalAlignment="Right" Width="40" Content="X" Margin="2" Command="{Binding DeleteDetailViewCommand}"/>
-        <Label Grid.Row="1" Content="Title"/>
-        <TextBox Grid.Row="2" Text="{Binding Meeting.Title,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Margin="10 10 10 0" Content="Title"/>
+            <Button Grid.Column="1"  HorizontalAlignment="Right" Width="40" Content="X" Margin="0" Command="{Binding DeleteDetailViewCommand}"/>
+        </Grid>
+        <TextBox Grid.Row="1" Text="{Binding Meeting.Title,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Row="3" Content="Start"/>
-        <DatePicker Grid.Row="4" SelectedDate="{Binding Meeting.DateFrom,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="2" Content="Start"/>
+        <DatePicker Grid.Row="3" SelectedDate="{Binding Meeting.DateFrom,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Row="5" Content="End"/>
-        <DatePicker Grid.Row="6" SelectedDate="{Binding Meeting.DateTo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="4" Content="End"/>
+        <DatePicker Grid.Row="5" SelectedDate="{Binding Meeting.DateTo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Grid Grid.Row="7">
+        <Grid Grid.Row="6">
             <Grid.Resources>
                 <DataTemplate DataType="{x:Type model:Friend}">
                     <TextBlock><Run Text="{Binding FirstName}"/> <Run Text="{Binding LastName}"/></TextBlock>
@@ -65,7 +70,7 @@
         </Grid>
         
         
-        <StackPanel Grid.Row="8" Orientation="Horizontal">
+        <StackPanel Grid.Row="7" Orientation="Horizontal">
             <Button Content="Save" Width="75" Margin="10" Command="{Binding SaveCommand}"/>
             <Button Content="Delete" Width="75" Margin="10" Command="{Binding DeleteCommand}"/>
         </StackPanel>
