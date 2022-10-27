@@ -22,6 +22,9 @@ namespace FriendOrganizer.UI.View
 
         private void ChkProgrammingLanguages_Unchecked(object sender, RoutedEventArgs e)
         {
+            var s = (CheckBox)sender;
+            string languageName = s.Content.ToString();
+            
             PrepareProgrammingLanguages();
         }
 

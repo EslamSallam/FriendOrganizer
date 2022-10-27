@@ -6,7 +6,5 @@ namespace FriendOrganizer.UI.ViewModel
     {
         Task LoadAsync(int? Id);
         bool HasChanges { get; }
-        public int Id { get; }
-        public string Title { get; set; }
     }
 }
