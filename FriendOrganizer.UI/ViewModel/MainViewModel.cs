@@ -65,11 +65,20 @@ namespace FriendOrganizer.UI.ViewModel
             _messageDialogService = messageDialogService;
             _eventAggregator.GetEvent<OpenDetailViewEvent>().Subscribe(onOpenDetailView);
             _eventAggregator.GetEvent<AfterDetailDeletedEvent>().Subscribe(AfterDetailDeleted);
+            _eventAggregator.GetEvent<AfterDetailClosedEvent>().Subscribe(AfterDetailClosed);
             CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
             CreateNewMeetingCommand = new DelegateCommand(OnCreateNewMeetingExecute);
             _detailViewModels = new ObservableCollection<IDetailViewModel>();
         }
 
+        private void AfterDetailClosed(AfterDetailClosedEventArgs args)
+        {
+            var detailVM = DetailViewModels.SingleOrDefault(vm => vm.Id == args.Id && vm.GetType().Name == args.ViewModelName);
+            if (detailVM != null)
+            {
+                DetailViewModels.Remove(detailVM);
+            }
+        }
 
         public async Task LoadAsync()
         {

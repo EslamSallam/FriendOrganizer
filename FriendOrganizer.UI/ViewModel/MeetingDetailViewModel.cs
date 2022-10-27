@@ -25,6 +25,8 @@ namespace FriendOrganizer.UI.ViewModel
         public IMessageDialogService _messageDialogService;
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
+        public ICommand DeleteDetailViewCommand { get; set; }
+
         public ICommand AddFriendCommand { get; }
         public ICommand RemoveFriendCommand { get; }
         public ICommand BulkRemoveFriendsCommand { get; }
@@ -122,6 +124,13 @@ namespace FriendOrganizer.UI.ViewModel
             BulkAddFriendsCommand = new DelegateCommand(BulkAddFriendsExecute);
             SaveCommand = new DelegateCommand(onSaveExecute, onSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
+            DeleteDetailViewCommand = new DelegateCommand(OnDeleteDetailView);
+
+        }
+
+        private void OnDeleteDetailView(object? obj)
+        {
+            _eventAggregator.GetEvent<AfterDetailClosedEvent>().Publish(new AfterDetailClosedEventArgs { Id = this.Id, ViewModelName = nameof(MeetingDetailViewModel) });
         }
 
         private void BulkAddFriendsExecute(object? obj)
